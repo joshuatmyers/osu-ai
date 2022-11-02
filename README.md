@@ -8,4 +8,4 @@ numPy
 PySide2
 labelImg
 
-Huge inspiration taken from: https://www.youtube.com/watch?v=LXA7zXVz8A4&t=405s
+Big inspiration taken from: https://www.youtube.com/watch?v=LXA7zXVz8A4&t=405s and https://github.com/GuiBrandt/OsuLearn
