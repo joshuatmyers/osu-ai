@@ -1,0 +1,4 @@
+hitcircle
+slider
+reverse
+spinner
