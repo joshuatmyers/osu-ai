@@ -1,4 +1,0 @@
-hitcircle
-slider
-reverse
-spinner
