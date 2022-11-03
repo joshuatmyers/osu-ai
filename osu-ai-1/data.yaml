@@ -1,0 +1,16 @@
+names:
+- cursor
+- hitcircle
+- reverse
+- sball
+- slider
+nc: 5
+roboflow:
+  license: CC BY 4.0
+  project: osu-ai
+  url: https://universe.roboflow.com/osuai/osu-ai/dataset/1
+  version: 1
+  workspace: osuai
+test: ../test/images
+train: osu-ai-1/train/images
+val: osu-ai-1/valid/images
