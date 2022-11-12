@@ -1,7 +1,5 @@
 notes.txt
 images/
 env.py
-osu-ai-1/train
-osu-ai-1/valid
-osu-ai-1/test
-.ipynb_checkpoints
+osu-ai-1/
+.ipynb_checkpoints/
