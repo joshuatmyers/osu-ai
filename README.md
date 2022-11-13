@@ -13,14 +13,16 @@ Modules/software (most likely) being used:
 Inspiration taken from:
 * https://www.youtube.com/watch?v=LXA7zXVz8A4&t=405s 
 * https://github.com/GuiBrandt/OsuLearn
+* ClarityCoders
 
 ## Step By Step goals:
-* Grab inputs
-* Edge detection on images
-* Capture gameplay live
-* OpenCV template matching to find cursor
+* <s>Grab inputs</s>
+* <s>Edge detection on images</s>
+* <s>Capture gameplay live</s>
+* <s>OpenCV template matching to find cursor</s>
+* Pass image from getScreen.py to the template matching function
 * Train dataset with screenshots with (x,y) coordinates
-* Train neural network with this data, using backpropogation
+* Train neural network with this data, using backpropogation algorithm
 
 
 (will possibly include more detailed steps of process)
