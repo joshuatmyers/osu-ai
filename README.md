@@ -2,11 +2,9 @@
 My attempt trying to use Machine Learning and Computer Vision to play osu!
 Programmed in Python
 Modules/software (most likely) being used:
-* pyTorch
+* pyTorch / TensorFlow and Keras
 * openCV - object detection
 * numPy
-* PySide2
-* PyQt5 - for gui
 * win32api - simulating inputs
 
 * First version of this program will focus on mouse movement
@@ -23,8 +21,8 @@ Inspiration taken from:
 * <s>Edge detection on images</s>
 * <s>Capture gameplay live</s>
 * <s>OpenCV template matching to find cursor</s>
-* Pass image from getScreen.py to the template matching function
-* Train dataset with screenshots with (x,y) coordinates
+* <s>Pass image from getScreen.py to the template matching function </s>
+* Label and store the images, using the previous coordinates
 * Train neural network with this data, using backpropogation algorithm
 
 
