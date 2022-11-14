@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 
+
+# get image data from getData and pass through into this function to get coordinates
 def temp_match():
     cursor_img = cv2.imread('C:/Users/Joshua/Desktop/Projects/Python/osu-ai/osu-ai/template-matching/cursor.png', cv2.IMREAD_UNCHANGED)
     game_img = cv2.imread('C:/Users/Joshua/Desktop/Projects/Python/osu-ai/osu-ai/template-matching/example.png', cv2.IMREAD_UNCHANGED)
