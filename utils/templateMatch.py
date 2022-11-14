@@ -1,23 +1,16 @@
 import cv2
 import numpy as np
 
-
 # get image data from getData and pass through into this function to get coordinates
-def temp_match():
+def temp_match(input_img):
     # cursor image is read converted to grayscale after reading to match with the image passed into the function
-    cursor_img = cv2.imread('C:/Users/joshu/Desktop/Projects/Python/osu-ai/template-matching/cursor.png', cv2.IMREAD_UNCHANGED)
-    game_img = cv2.imread('C:/Users/joshu/Desktop/Projects/Python/osu-ai/template-matching/example.png', cv2.IMREAD_UNCHANGED)
-    #game_img = input_img
-
-    #cv2.imshow('Game', game_img)
-    #cv2.waitKey()
-    #cv2.destroyAllWindows()
+    cursor_img = cv2.imread('C:/Users/joshu/Desktop/Projects/Python/osu-ai/template-matching/cursor.png', cv2.IMREAD_GRAYSCALE)
+    #game_img = cv2.imread('C:/Users/joshu/Desktop/Projects/Python/osu-ai/template-matching/example.png', cv2.IMREAD_GRAYSCALE)
+    game_img = cv2.cvtColor(input_img, cv2.COLOR_BGR2GRAY)
 
     result = cv2.matchTemplate(game_img, cursor_img, cv2.TM_CCOEFF_NORMED)
-    #cv2.imshow('Result', result)
-    #cv2.waitKey()
-    #cv2.destroyAllWindows()
-
+    
+    # max loc returns top left coordinate of template that is being matched
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
 
     w = cursor_img.shape[1]
@@ -32,4 +25,4 @@ def temp_match():
     # returns tuple containing coordinates
     return (x,y)
 
-print(temp_match())
+#print(temp_match())

@@ -19,6 +19,7 @@ import os
 
 from utils.getScreen import grab_screen
 from utils.getInput import key_input
+from utils.templateMatch import temp_match
 
 file_name = "C:/Users/Joshua/Desktop/Projects/Python/osu-ai/osu-ai/data/training_data.npy"
 file_name2 = "C:/Users/Joshua/Desktop/Projects/Python/osu-ai/osu-ai/data/target_data.npy"
@@ -55,12 +56,14 @@ while True:
     count +=1
     last_time = time.time()
     image = grab_screen(region=(100, 100, 899, 699))
+
+    # sends image to match template and get x,y coords
+    print(temp_match(image))
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     # Canny filter makes the cursor invisible to the program, may work around later
     #image = cv2.Canny(image, threshold1=19, threshold2=20)
-
-    image = cv2.resize(image, (224, 224))
+    #image = cv2.resize(image, (224, 224))
 
     # Debug line to show image
     cv2.imshow("AI Peak", image)
@@ -70,15 +73,13 @@ while True:
     #image = np.array(image)
     #image_data.append(image)
 
-    # Send image to template matching to get x and y coordinates
-    # Alternitavely, could use win32api to get cursor position relative to the game window
-
+    keys = key_input()
     # key presses to be included in the model at another time
-    #keys = key_input()
     #targets.append(keys)
     if keys == "H":
         break
 
+    # needed to calculate how fast the program is working
     print('loop took {} seconds'.format(time.time()-last_time))
 
-save_data(image_data, targets)
+#save_data(image_data, targets)
