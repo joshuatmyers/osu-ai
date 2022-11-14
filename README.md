@@ -9,6 +9,9 @@ Modules/software (most likely) being used:
 * PyQt5 - for gui
 * win32api - simulating inputs
 
+* First version of this program will focus on mouse movement
+* Second time around, an attempt will be made to train a function with key presses included
+
 
 Inspiration taken from:
 * https://www.youtube.com/watch?v=LXA7zXVz8A4&t=405s 
