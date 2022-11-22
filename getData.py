@@ -21,8 +21,8 @@ from utils.getScreen import grab_screen
 from utils.getInput import key_input
 from utils.templateMatch import temp_match
 
-file_name = "C:/Users/joshu/Desktop/Projects/Python/osu-ai/data/training_data.npy"
-file_name2 = "C:/Users/joshu/Desktop/Projects/Python/osu-ai/data/target_data.npy"
+file_name = "C:/Users/Joshua/Desktop/Projects/Python/osu-ai/osu-ai/data/training_data.npy"
+file_name2 = "C:/Users/Joshua/Desktop/Projects/Python/osu-ai/osu-ai/data/target_data.npy"
 
 
 def get_data():
@@ -66,8 +66,8 @@ while True:
     #image = cv2.resize(image, (224, 224))
 
     # Debug line to show image
-    cv2.imshow("AI Peak", image)
-    cv2.waitKey(1)
+    #cv2.imshow("AI Peak", image)
+    #cv2.waitKey(1)
 
     # Convert to numpy array
     image = np.array(image)
