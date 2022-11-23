@@ -3,21 +3,96 @@
 from fastai.vision.all import *
 import time
 import cv2
+import numpy as np
+import pandas as pd
 from utils.getScreen import grab_screen
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Dense, CuDNNLSTM as LSTM, Input, GaussianNoise
+import matplotlib.pyplot as plt
+import PIL
+import pathlib
+from PIL import Image 
+from PIL.ImageDraw import Draw
+import tensorflow as tf
+import tensorflow as keras
+from keras import Model, layers
+from keras.layers import *
 
-path = Path("C:\Users\Joshua\Desktop\Data\osu-ai")
-imgs = get_image_files(path)
-lbls = get_files(path, extension='.png')
-print(f"Total images: {len(imgs)}")
+training_csv_file = 'data.csv'
+training_image_dir = 'C:/Users/Joshua/Desktop/Data/osu-ai'
 
-def img2kpts(f):
-    name = os.path.basename(f)
-    split = str(name).split("-")
-    kpts = []
-    kpts.append([int(split[1]), int(split[2][:4])])
-    return tensor(kpts)
+training_image_records = pd.read_csv(training_csv_file)
+train_image_path = os.path.join(os.getcwd(), training_image_dir)
+
+train_images = []
+train_targets = []
+
+for index, row in training_image_records.iterrows():
+
+    (filename, x, y) = row
+
+    train_image_fullpath = os.path.join(train_image_path, filename)
+    train_img = keras.preprocessing.image.load_img(train_image_fullpath, target_size=(600, 800))
+    train_img_arr = keras.preprocessing.image.img_to_array(train_img)
+
+    train_images.append(train_img_arr)
+    train_targets.append((x, y))
+
+train_images = np.array(train_images)
+train_targets = np.array(train_targets)
+
+validation_images = np.array(validation_images)
+validation_targets = np.array(validation_targets)
+
+width = 800
+height = 600
+
+
+#create the common input layer
+input_shape = (height, width, 3)
+input_layer = tf.keras.layers.Input(input_shape)
+
+#create the base layers
+base_layers = layers.experimental.preprocessing.Rescaling(1./255, name='bl_1')(input_layer)
+base_layers = layers.Conv2D(16, 3, padding='same', activation='relu', name='bl_2')(base_layers)
+base_layers = layers.MaxPooling2D(name='bl_3')(base_layers)
+base_layers = layers.Conv2D(32, 3, padding='same', activation='relu', name='bl_4')(base_layers)
+base_layers = layers.MaxPooling2D(name='bl_5')(base_layers)
+base_layers = layers.Conv2D(64, 3, padding='same', activation='relu', name='bl_6')(base_layers)
+base_layers = layers.MaxPooling2D(name='bl_7')(base_layers)
+base_layers = layers.Flatten(name='bl_8')(base_layers)
+
+#create the localiser branch
+locator_branch = layers.Dense(128, activation='relu', name='bb_1')(base_layers)
+locator_branch = layers.Dense(64, activation='relu', name='bb_2')(locator_branch)
+locator_branch = layers.Dense(32, activation='relu', name='bb_3')(locator_branch)
+locator_branch = layers.Dense(4, activation='sigmoid', name='bb_head')(locator_branch)
+
+model = tf.keras.Model(input_layer, outputs=[locator_branch])
+
+losses = {"bb_head":tf.keras.losses.MSE}
+
+model.compile(loss=losses, optimizer='Adam', metrics=['accuracy'])
+
+trainTargets = {
+    "bb_head": train_targets
+}
+validationTargets = {
+    "bb_head": validation_targets
+}
+
+history = model.fit(train_images, trainTargets,
+             validation_data=(validation_images, validationTargets),
+             batch_size=4,
+             epochs=20,
+             shuffle=True,
+             verbose=1)
+
+for layer in model.layers:
+    if layer.name.startswith('bl_'):
+        layer.trainable = False
+        
+for layer in model.layers:
+    if layer.name.startswith('bb_'):
+        layer.trainable = False
 
 def label_func(x): return x.name[0:7]
 
