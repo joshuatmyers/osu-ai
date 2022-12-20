@@ -60,16 +60,16 @@ while True:
     # sends image to match template and get x,y coords
     #print(temp_match(image))
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
+    image = cv2.resize(image, (80,60), interpolation = cv2.INTER_AREA)
     # Canny filter makes the cursor invisible to the program, may work around later
     #image = cv2.Canny(image, threshold1=19, threshold2=20)
     #image = cv2.resize(image, (224, 224))
 
     # Debug line to show image
-    #cv2.imshow("AI Peak", image)
-    #cv2.waitKey(1)
+    cv2.imshow("AI Peak", image)
+    cv2.waitKey(1)
 
-    # Convert to numpy array
+    # Convert to numpy arrbay
     image = np.array(image)
     image_data.append(image)
 
