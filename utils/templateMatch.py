@@ -4,7 +4,7 @@ import numpy as np
 # get image data from getData and pass through into this function to get coordinates
 def temp_match(input_img):
     # cursor image is read converted to grayscale after reading to match with the image passed into the function
-    cursor_img = cv2.imread('C:/Users/Joshua/Desktop/Projects/Python/osu-ai/osu-ai/template-matching/cursor.png', cv2.IMREAD_GRAYSCALE)
+    cursor_img = cv2.imread('C:/Users/joshu/Desktop/Projects/Python/osu-ai/template-matching/cursor.png', cv2.IMREAD_GRAYSCALE)
     #game_img = cv2.imread('C:/Users/joshu/Desktop/Projects/Python/osu-ai/template-matching/example.png', cv2.IMREAD_GRAYSCALE)
     game_img = cv2.cvtColor(input_img, cv2.COLOR_BGR2GRAY)
 
