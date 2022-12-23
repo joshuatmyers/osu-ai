@@ -21,9 +21,8 @@ from utils.getScreen import grab_screen
 from utils.getInput import key_input
 from utils.templateMatch import temp_match
 
-file_name = "C:/Users/Joshua/Desktop/Projects/Python/osu-ai/osu-ai/data/training_data.npy"
-file_name2 = "C:/Users/Joshua/Desktop/Projects/Python/osu-ai/osu-ai/data/target_data.npy"
-
+file_name = "C:/Users/joshu/Desktop/Projects/Python/osu-ai/data/training_data.npy"
+file_name2 = "C:/Users/joshu/Desktop/Projects/Python/osu-ai/data/target_data.npy"
 
 def get_data():
 
@@ -56,18 +55,18 @@ while True:
     count +=1
     last_time = time.time()
     image = grab_screen(region=(100, 100, 899, 699))
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     targets.append(temp_match(image))
     # sends image to match template and get x,y coords
     #print(temp_match(image))
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     image = cv2.resize(image, (80,60), interpolation = cv2.INTER_AREA)
-    # Canny filter makes the cursor invisible to the program, may work around later
+    # Canny filter makes bhbbhthe cursor invisible to the program, may work around later
     #image = cv2.Canny(image, threshold1=19, threshold2=20)
     #image = cv2.resize(image, (224, 224))
 
     # Debug line to show image
-    cv2.imshow("AI Peak", image)
-    cv2.waitKey(1)
+    #cv2.imshow("AI Peak", image)
+    #cv2.waitKey(1)
 
     # Convert to numpy arrbay
     image = np.array(image)
@@ -81,4 +80,4 @@ while True:
     # needed to calculate how fast the program is working
     print('loop took {} seconds'.format(time.time()-last_time))
 
-save_data(image_data, targets)
+#save_data(image_data, targets)
