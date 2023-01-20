@@ -4,3 +4,4 @@ template-matching/
 utils/beatmapData.py
 utils/__pycache__
 models/
+data/
