@@ -1,2 +1,7 @@
 notes.txt
 .ipynb_checkpoints/
+template-matching/
+utils/beatmapData.py
+utils/__pycache__
+models/
+data/

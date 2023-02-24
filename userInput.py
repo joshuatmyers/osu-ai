@@ -1,21 +1,8 @@
-# Plans for getData.py
-
-# capture osu! window
-# apply grayscale and filter to reduce size
-
-# Inside a while loop:
-# take a screenshot
-# take current mouse position => append to array
-# take current keys pressed => append to different array
-# check if button has been pressed to stop taking data
-
-# Labelling images:
-# loop through all images
-# attach mouse pos (x,y) to name of image
 import numpy as np
 import cv2
 import time
 import os
+import win32api
 
 from utils.getScreen import grab_screen
 from utils.getInput import key_input
@@ -55,15 +42,15 @@ while True:
     count +=1
     last_time = time.time()
     image = grab_screen(region=(100, 100, 899, 699))
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    targets.append(temp_match(image))
-    # sends image to match template and get x,y coords
+    # grabs position directly from screen
+    pos = win32api.GetCursorPos()
+    targets.append((pos[0], pos[1]))
     #print(temp_match(image))
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     image = cv2.resize(image, (80,60), interpolation = cv2.INTER_AREA)
-    # Canny filter makes bhbbhthe cursor invisible to the program, may work around later
+    # Canny filter - may implement at another time, currently negatively impacts accuracy of model
     #image = cv2.Canny(image, threshold1=19, threshold2=20)
-    #image = cv2.resize(image, (224, 224))
-
+    
     # Debug line to show image
     #cv2.imshow("AI Peak", image)
     #cv2.waitKey(1)
@@ -79,5 +66,6 @@ while True:
 
     # needed to calculate how fast the program is working
     print('loop took {} seconds'.format(time.time()-last_time))
+    #print(pos[0], pos[1])
 
-#save_data(image_data, targets)
+save_data(image_data, targets)
