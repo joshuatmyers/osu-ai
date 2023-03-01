@@ -7,7 +7,7 @@ import pandas as pd
 
 user32 = ctypes.windll.user32
 
-with open('C:/Users/joshu/Desktop/Projects/Python/osu-ai/data/coordinates.csv', 'a') as f:
+with open('C:/Users/Joshua/Desktop/Projects/Python/osu-ai/osu-ai/data/coordinates.csv', 'a') as f:
     f.write("x, y")
     f.writelines('\n')
 
@@ -70,7 +70,7 @@ class Detection:
 
         if largest_pos:
             x, y, w, h = largest_pos
-            #cv.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 3)
+            #cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 3)
             return (x+w/2) * (100 / self.scale_percent), (y+h/2) * (100 / self.scale_percent)
         else:
             return 0, 0
@@ -91,9 +91,6 @@ class Detection:
             # Resize the frame
             frame = cv2.resize(frame, self.dim, interpolation = cv2.INTER_AREA)
 
-            #lowerHSV = np.array([0, 0, 0])
-            #upperHSV  = np.array([180, 255, 250])
-
             img_hsv=cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
             # lower mask (0-10)
@@ -110,19 +107,15 @@ class Detection:
             mask = mask0+mask1
 
             # set my output img to zero everywhere except my mask
-            output_img = frame.copy()
-            output_img[np.where(mask==0)] = 0
-
-            # or your HSV image, which I *believe* is what you want
-            output_hsv = img_hsv.copy()
-            output_hsv[np.where(mask==0)] = 0
-
+            #output_img = frame.copy()
+            #output_img[np.where(mask==0)] = 0
 
             # Find all countours and draw a rectangle 
             contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
             x, y = self.Check_contours(contours, frame)
 
-            # only record after the first 120 frames to avoid recording into with bg
+            # following is only needed when using auto replays, i.e start and ending must be removed
+            """
             if count < 120:
                 count += 1
             if count >= 120:
@@ -134,9 +127,24 @@ class Detection:
                 with open('C:/Users/joshu/Desktop/Projects/Python/osu-ai/data/coordinates.csv', 'a') as f:
                     f.write("{}, {}".format((x/10),(y/10)))
                     f.writelines('\n')
+            """
+            
+            # following done with player replays
+            img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            img = cv2.resize(img, (80,60), interpolation = cv2.INTER_AREA)
+            cv2.imwrite("C:/Users/Joshua/Desktop/Projects/Python/osu-ai/osu-ai/data/frames/frame-%d.jpg" % count, img)
+            count += 1
+
+            with open('C:/Users/Joshua/Desktop/Projects/Python/osu-ai/osu-ai/data/coordinates.csv', 'a') as f:
+                f.write("{}, {}".format((x/10),(y/10)))
+                f.writelines('\n')
             
             # display the images
-            #cv.imshow('OUTPUT', frame)
+            # bounding box around cursor - when bounding box isnt commented out line 73
+            #cv2.imshow('OUTPUT', frame)
+
+            # output is 0 everywhere except mask
+            #cv2.imshow('mask', output_img)
 
             # press 'q' with the output window focused to exit.
             # waits 1 ms every loop to process key presses
@@ -147,7 +155,7 @@ class Detection:
     cv2.destroyAllWindows()
 
 # load the detector
-path = "C:/Users/joshu/Desktop/Projects/Python/osu-ai/data/replay-path/replay.avi"
+path = "C:/Users/Joshua/Desktop/Projects/Python/osu-ai/osu-ai/data/replay.avi"
 detector = Detection(path)
 # start detection
 detector.start()
