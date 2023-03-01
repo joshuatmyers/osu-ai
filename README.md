@@ -2,7 +2,7 @@
 My attempt trying to use Machine Learning and Computer Vision to play osu!
 Programmed in Python
 Main modules used:
-* pyTorch (to be implemented after initial fastai model)
+* TensorFlow and Keras
 * openCV 
 * numPy
 * win32api
@@ -16,8 +16,8 @@ One of the big hurdles I've come across is data collection. This is because of h
 * Template matching from videos - using resources such as osr2mp4 will make creating videos simple and easy to increase the scale of the model. My template matching code will have to be improved so cursor data is more accurate and reliable. 
 
 ## Future plans
+* Increase accuracy of current TensorFlow model
 * Make the program more user friendly - currently very awkward to use
-* Implement the model in pyTorch
 * Try implementing a RCNN/LSTM and compare to CNN
 * Automate most of the process for training the model, i.e. supply it with a .osr file and it does the rest of the work
 
