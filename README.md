@@ -15,6 +15,16 @@ One of the big hurdles I've come across is data collection. This is because of h
 * Analyse raw data using circleguard - this can provide accurate data without the need to play the maps, hugely increasing the efficiency. Processing this data so it is usable with the model is a pain, but is doable
 * Template matching from videos - using resources such as osr2mp4 will make creating videos simple and easy to increase the scale of the model. My template matching code will have to be improved so cursor data is more accurate and reliable. 
 
+## Instructions
+* Before using any of this code, use osr2mp4 and convert replay files of your choice. Alter the settings so it doesnt include the start or end of the replay.
+* masking.py deals with the creation of all data used by the model, provide it with the path to the video file and it will create the images and a csv file containing the corresponding coordinates to the image
+* Change the paths in the tensorflow notebook, as well as split for training and testing data. Run the notebook and allow the model to train
+* The agent isnt included in the repository yet. In the notebook, you can test the model with a provided image of gameplay. If you want to do this with live gameplay, use getScreen.py to return an image, and predict the coordinates (multiply by 10 to get position for osu window in 800x600 res) with the model. Use win32api to actually move the cursor to said position (since the model predicts the position from just the window, an offset will have to be added depending on the location of the window)
+## Additional notes
+* This is by no means a finished product, I will continue to refine it when I have the motivation and/or time
+* Paths will have to be altered manually for each instance it appears in the code
+* Intended to be used with the relax mod, key presses will be included at a later date
+
 ## Future plans
 * Increase accuracy of current TensorFlow model
 * Make the program more user friendly - currently very awkward to use
@@ -26,5 +36,8 @@ Inspiration taken from:
 * https://github.com/GuiBrandt/OsuLearn
 * ClarityCoders
 * Vedal
+
+Osu replay files to video files:
+* https://github.com/uyitroa/osr2mp4-app/
 
 
